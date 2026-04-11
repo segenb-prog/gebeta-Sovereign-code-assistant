@@ -109,9 +109,19 @@ Gebeta Sovereign Code Assistant is designed to support environments that require
 
 > **Important:** This tool does not automatically make an organization compliant. It helps support a compliance-friendly engineering posture.
 
+## Secret Scanning
+
+The repository includes a `.gitleaks.toml` configuration and pre-commit hook example to prevent accidental commits of secrets (API keys, passwords, tokens). See `CONTRIBUTING.md` for setup instructions.
+
+## v2.0 Plugin Sandboxing Strategy
+
+Future versions of Gebeta will support user‑written Java plugins (using `@Rule` annotations and `ServiceLoader`). Because the Java Security Manager is deprecated (JEP 486), we will adopt a **trusted plugin model** for v2.0 – only plugins written by the team itself or explicitly approved will be loaded.
+
+For community plugins, a future version (v3.0) may explore **GraalVM isolates** or separate containerised execution to sandbox untrusted code.
+
+For now, all plugins are considered trusted. Never load plugins from untrusted sources.
+
 ---
 
 **Last updated:** April 2026
 ```
-
----
