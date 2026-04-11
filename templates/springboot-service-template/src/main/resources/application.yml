@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: gebeta-microservice
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/gebeta_db}
+    username: ${DATABASE_USER:postgres}
+    password: ${DATABASE_PASSWORD:password}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: ${PORT:8080}
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:your-secret-key-change-in-production}
+    expiration: ${JWT_EXPIRATION:86400000}
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
