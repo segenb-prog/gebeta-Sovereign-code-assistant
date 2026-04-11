@@ -14,6 +14,9 @@ A production-ready FastAPI template with authentication, database integration, a
 
 ## Quick Start
 
+....
+
+
 ```bash
 # Create new service from template
 cp -r templates/fastapi-service-template /path/to/your-new-service
@@ -74,4 +77,3 @@ fastapi-service-template/
 
 ---
 
-Part of Gebeta Sovereign Code Assistant
