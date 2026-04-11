@@ -1,0 +1,15 @@
+# Compiled output
+target/
+*.jar
+*.war
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Logs
+*.log
+
+# Environment
+.env
