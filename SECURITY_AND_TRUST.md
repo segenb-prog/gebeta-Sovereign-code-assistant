@@ -22,6 +22,20 @@
 - Insider threat / deliberate data exfiltration
 - Insecure developer operational habits
 
+## ⚠️ Trust Disclaimer
+
+Gebeta Sovereign Code Assistant provides **default configurations and recommendations** that, if followed, maintain the sovereignty and privacy guarantees described in this document.
+
+**If you or your team:**
+- Disable manual approval prompts in Continue,
+- Allow telemetry or crash reporting to remain enabled,
+- Skip installing the pre‑commit secret scanning hook,
+- Modify firewall rules to allow outbound connections from Ollama or the agent,
+
+…you are operating **outside** the Gebeta security model. In that case, the promises of “no code leaves your machine”, “air‑gapped operation”, and “auditability” no longer apply.
+
+> **You are responsible for your own security posture.** Gebeta provides the tools; you must choose to use them correctly.
+
 ## Trust Boundary Diagram
 
 ```
@@ -112,6 +126,10 @@ Gebeta Sovereign Code Assistant is designed to support environments that require
 ## Secret Scanning
 
 The repository includes a `.gitleaks.toml` configuration and pre-commit hook example to prevent accidental commits of secrets (API keys, passwords, tokens). See `CONTRIBUTING.md` for setup instructions.
+
+## Rate Limiting (v2.0)
+
+Rate limiting is **not implemented in v1.0.0**. Public endpoints such as `/auth/login` and `/auth/register` are vulnerable to brute‑force attacks. In v2.0, rate limiting will be added with strict limits (e.g., 10 requests per minute per IP for authentication endpoints). Rate‑limited responses will return HTTP 429 with a `Retry-After` header.
 
 ## v2.0 Plugin Sandboxing Strategy
 
