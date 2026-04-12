@@ -16,7 +16,7 @@ Thank you for your interest in contributing! We welcome contributions of all kin
 ### Prerequisites
 
 - Git
-- Basic understanding of YAML and markdown
+- Basic understanding of YAML and Markdown
 - (For code contributions) Familiarity with Continue extension architecture
 
 ### Local Development Setup
@@ -35,7 +35,7 @@ Contribution Guidelines
 For Documentation Changes
 
 · Keep language clear and accessible
-· Use markdown formatting consistently
+· Use Markdown formatting consistently
 · Test any code blocks before submitting
 
 For Configuration Changes
@@ -135,11 +135,10 @@ Open an issue or contact the maintainer:
 
 · Mohammed B. Kemal — Founder & System Architect
 · GitHub: @gebetasuq
+. https://gebetauae.com 
 
 ---
 
 Thank you for helping build sovereign engineering infrastructure!
 
 Last updated: April 2026
-
-```
