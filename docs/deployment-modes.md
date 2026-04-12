@@ -165,5 +165,3 @@ cp configs/continue-config.yaml /path/to/project/.continue/config.yaml
 ---
 
 Last updated: April 2026
-
-```
