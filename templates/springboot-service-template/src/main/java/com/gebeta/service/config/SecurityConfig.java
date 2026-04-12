@@ -1,3 +1,5 @@
+package com.gebeta.service.config;
+
 import com.gebeta.service.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
