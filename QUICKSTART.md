@@ -48,7 +48,7 @@ copy configs\continue-config.yaml %USERPROFILE%\.continue\config.yaml
 
 Step 5: Test It
 
-Open VS Code, open Continue sidebar, switch to Agent Mode, and type:
+Open VS Code, open the Continue sidebar, switch to Agent Mode, and type:
 
 ```
 @agent Create a file called hello.py that prints "Hello Gebeta"
