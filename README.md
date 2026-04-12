@@ -7,7 +7,7 @@
 [![CI](https://github.com/gebetasuq/gebeta-Sovereign-code-assistant-/actions/workflows/test.yml/badge.svg)](https://github.com/gebetasuq/gebeta-Sovereign-code-assistant-/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/gebetasuq/gebeta-Sovereign-code-assistant-/branch/main/graph/badge.svg)](https://codecov.io/gh/gebetasuq/gebeta-Sovereign-code-assistant-)
 
- **AI accelerates engineering without removing human control.**
+> **AI accelerates engineering without removing human control.**
 
 ---
 
@@ -98,7 +98,7 @@ Open VS Code, open the Continue sidebar (Cmd+Shift+P → "Continue: Open Chat"),
 
 ---
 
-**Deployment Modes**
+Deployment Modes
 
 Mode A: Maximum Privacy (Recommended for Sensitive Code)
 
@@ -139,7 +139,7 @@ cp configs/continue-config.yaml ~/.continue/config.yaml
 
 ---
 
-**Model Recommendations**
+Model Recommendations
 
 Use Case Model RAM Command
 Fast autocomplete qwen2.5-coder:1.5b ~2 GB ollama pull qwen2.5-coder:1.5b
@@ -149,7 +149,7 @@ Low RAM fallback phi3:mini ~2.5 GB ollama pull phi3:mini
 
 ---
 
-**Security & Trust**
+Security & Trust
 
 What This Protects Against
 
@@ -160,7 +160,7 @@ Accidental source leakage Air-gappable configuration
 Over-permissioned agents Manual approval required
 Silent execution Agent asks before running commands
 
-**What This Does NOT Protect Against**
+What This Does NOT Protect Against
 
 · Malicious local dependencies (npm, pip, etc.)
 · Insecure commands approved by the user
@@ -177,23 +177,22 @@ Rate limiting is not implemented in v1.0.0. Public endpoints such as /auth/login
 
 ---
 
-## Documentation
+Documentation
 
-| Document | Description |
-|----------|-------------|
-| [QUICKSTART.md](QUICKSTART.md) | Get started in 10 minutes |
-| [SECURITY_AND_TRUST.md](SECURITY_AND_TRUST.md) | Threat model and trust boundaries |
-| [TEAM_DEPLOYMENT.md](TEAM_DEPLOYMENT.md) | Scale to your team |
-| [USE_CASES.md](USE_CASES.md) | Real-world examples |
-| [WHY_GEBETA.md](WHY_GEBETA.md) | Founder vision and philosophy |
-| [ROADMAP.md](ROADMAP.md) | Product roadmap |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute |
-| [TESTING.md](TESTING.md) | Running tests and coverage reports |
-| [PERFORMANCE_TUNING.md](PERFORMANCE_TUNING.md) | Memory limits, JVM tuning, hardware adjustments |
+Document Description
+QUICKSTART.md Get started in 10 minutes
+SECURITY_AND_TRUST.md Threat model and trust boundaries
+TEAM_DEPLOYMENT.md Scale to your team
+USE_CASES.md Real-world examples
+WHY_GEBETA.md Founder vision and philosophy
+ROADMAP.md Product roadmap
+CONTRIBUTING.md How to contribute
+TESTING.md Running tests and coverage reports
+PERFORMANCE_TUNING.md Memory limits, JVM tuning, hardware adjustments
 
 ---
 
-**Repository Structure**
+Repository Structure
 
 ```
 gebeta-sovereign-code-assistant/
@@ -240,7 +239,7 @@ gebeta-sovereign-code-assistant/
 
 ---
 
-**Known Limitations**
+Known Limitations
 
 · Local models may be slower than cloud models
 · Agent tool use varies by model and hardware
@@ -253,7 +252,7 @@ Positioning: Gebeta promises controlled AI, not perfect AI. That is a stronger p
 
 ---
 
-**Roadmap**
+Roadmap
 
 Version Focus Timeline
 V1 Foundation — Documentation, configs, starter kit ✅ Now
@@ -268,7 +267,7 @@ If Gebeta Sovereign Code Assistant helps you build with control and privacy, ple
 
 ---
 
-**Contributing**
+Contributing
 
 We welcome contributions! Please see CONTRIBUTING.md for guidelines.
 
@@ -282,13 +281,13 @@ Ways to contribute:
 
 ---
 
-**License**
+License
 
-This project is licensed under the **MIT License** — see [LICENSE](LICENSE) for details.
+This project is licensed under the MIT License — see LICENSE for details.
 
 ---
 
-**Founder**
+Founder
 
 Mohammed B. Kemal
 Founder & System Architect, Gebeta Universe
@@ -298,12 +297,13 @@ Founder & System Architect, Gebeta Universe
 · 🐦 Twitter: @gebetasovereign
 
 ---
-## Acknowledgments
 
-- [Ollama](https://ollama.com) — Local LLM runtime
-- [Continue](https://continue.dev) — IDE AI assistant
-- [VS Code](https://code.visualstudio.com) — Code editor
-- [Warp](https://www.warp.dev) — Modern terminal (optional)
+Acknowledgments
+
+· Ollama — Local LLM runtime
+· Continue — IDE AI assistant
+· VS Code — Code editor
+· Warp — Modern terminal (optional)
 
 ---
 
@@ -311,5 +311,6 @@ Built with ❤️ for sovereign engineering.
 
 Document version: 1.0.0 | Last updated: April 2026
 
-```
 © 2026 Gebeta Universe. All rights reserved.
+
+```
