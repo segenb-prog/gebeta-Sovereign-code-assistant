@@ -8,7 +8,8 @@ from sqlalchemy import select
 
 from app.database import get_db
 from app.models.user import User
-from app.schemas.user import UserResponse, UserCreate
+from app.schemas.user import UserResponse
+from app.schemas.user_update import UserUpdateRequest
 from app.api.auth import oauth2_scheme
 from app.utils.security import get_password_hash
 
@@ -19,7 +20,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: AsyncSession
     """Get current user from JWT token."""
     from jose import jwt, JWTError
     from app.config import settings
-    
+
     try:
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
         user_id: str = payload.get("sub")
@@ -27,13 +28,13 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: AsyncSession
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
     except JWTError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
-    
+
     result = await db.execute(select(User).where(User.id == int(user_id)))
     user = result.scalar_one_or_none()
-    
+
     if user is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
-    
+
     return user
 
 
@@ -45,19 +46,29 @@ async def get_me(current_user: User = Depends(get_current_user)):
 
 @router.put("/users/me", response_model=UserResponse)
 async def update_me(
-    user_update: UserCreate,
+    user_update: UserUpdateRequest,
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    """Update current user profile."""
-    if user_update.email:
+    """Partially update current user profile (all fields optional)."""
+    # Update email if provided and different
+    if user_update.email is not None and user_update.email != current_user.email:
+        # Check email uniqueness
+        result = await db.execute(select(User).where(User.email == user_update.email))
+        if result.scalar_one_or_none():
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Email already in use by another account",
+            )
         current_user.email = user_update.email
-    if user_update.full_name:
+
+    if user_update.full_name is not None:
         current_user.full_name = user_update.full_name
-    if user_update.password:
+
+    if user_update.password is not None:
         current_user.hashed_password = get_password_hash(user_update.password)
-    
+
     await db.commit()
     await db.refresh(current_user)
-    
+
     return current_user
