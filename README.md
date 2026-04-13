@@ -171,10 +171,14 @@ What This Does NOT Protect Against
 
 Important: This is a control-first system, not a convenience-first system. Human review is always required.
 
-Rate Limiting (v2.0)
+## Rate Limiting
 
-Rate limiting is not implemented in v1.0.0. Public endpoints such as /auth/login and /auth/register are vulnerable to brute‑force attacks. In v2.0, rate limiting will be added with strict limits (e.g., 10 requests per minute per IP for authentication endpoints). Rate‑limited responses will return HTTP 429 with a Retry-After header.
+Authentication endpoints are protected against brute‑force attacks:
 
+- **Login:** 10 requests per minute per IP
+- **Registration:** 5 requests per 5 minutes per IP
+
+Exceeding the limit returns HTTP 429 with a `Retry-After` header. Rate limiting is implemented in both FastAPI and Spring Boot templates.
 ---
 
 Documentation
