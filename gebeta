@@ -1,0 +1,116 @@
+#!/usr/bin/env python3
+"""
+Gebeta Governance CLI – v1.0 prototype.
+Validates commands against safe-command-policy.md and logs actions.
+"""
+
+import sys
+import json
+import re
+import argparse
+from pathlib import Path
+from datetime import datetime
+
+AUDIT_LOG = Path.home() / ".gebeta" / "audit.json"
+# Try to find policy file in repo root, then fallback to /etc/gebeta
+REPO_ROOT = Path(__file__).parent
+SAFE_COMMAND_POLICY = REPO_ROOT / "configs" / "safe-command-policy.md"
+if not SAFE_COMMAND_POLICY.exists():
+    SAFE_COMMAND_POLICY = Path("/etc/gebeta/safe-command-policy.md")
+
+# Expanded blocked patterns (including those without backticks)
+BLOCKED_KEYWORDS = [
+    r"rm\s+-rf", r"rmdir", r"del\s+/", r"format", r"mkfs",
+    r"git\s+push\s+--force", r"git\s+push\s+-f", r"git\s+reset\s+--hard", r"git\s+clean\s+-fd", r"git\s+branch\s+-D",
+    r"docker\s+system\s+prune", r"docker\s+volume\s+prune", r"docker\s+rm\s+-f", r"docker\s+rmi\s+-f",
+    r"chmod\s+-R", r"chown\s+-R", r"setfacl",
+    r"DROP\s+DATABASE", r"DROP\s+TABLE", r"TRUNCATE\s+TABLE", r"DELETE\s+FROM\s+\w+\s+WHERE\s*$",
+    r"sudo\s", r"doas\s", r"su\s",
+    r"npm\s+install\s+-g", r"pip\s+install\s+--user", r"gem\s+install", r"cargo\s+install",
+    r"curl\s+.*\|\s*sh", r"wget\s+.*\|\s*sh"
+]
+
+def load_blocked_patterns():
+    """Extract blocked commands from safe-command-policy.md, plus hardcoded keywords."""
+    patterns = list(BLOCKED_KEYWORDS)  # start with hardcoded
+    if not SAFE_COMMAND_POLICY.exists():
+        return patterns
+    text = SAFE_COMMAND_POLICY.read_text()
+    # Simple extraction: look for lines with `- ` and a backtick
+    for line in text.splitlines():
+        line = line.strip()
+        if line.startswith("- `"):
+            cmd = line.split("`")[1].strip()
+            # escape regex special chars (simple)
+            patterns.append(re.escape(cmd))
+        elif line.startswith("- "):
+            # e.g., "- sudo (any command)"
+            word = line[2:].split()[0].strip()
+            if word not in ["sudo", "doas", "su"]:
+                continue
+            patterns.append(r"\b" + re.escape(word) + r"\b")
+    return patterns
+
+def is_command_blocked(cmd, blocked_patterns):
+    for pattern in blocked_patterns:
+        if re.search(pattern, cmd, re.IGNORECASE):
+            return True
+    return False
+
+def log_action(cmd, approved):
+    AUDIT_LOG.parent.mkdir(parents=True, exist_ok=True)
+    entry = {
+        "timestamp": datetime.utcnow().isoformat(),
+        "command": cmd,
+        "approved": approved
+    }
+    with open(AUDIT_LOG, "a") as f:
+        f.write(json.dumps(entry) + "\n")
+
+def audit_export(format="json"):
+    if not AUDIT_LOG.exists():
+        print("No audit log found.", file=sys.stderr)
+        sys.exit(1)
+    with open(AUDIT_LOG, "r") as f:
+        entries = [json.loads(line) for line in f]
+    if format == "json":
+        print(json.dumps(entries, indent=2))
+    elif format == "csv":
+        import csv
+        writer = csv.DictWriter(sys.stdout, fieldnames=["timestamp", "command", "approved"])
+        writer.writeheader()
+        writer.writerows(entries)
+    else:
+        print(f"Unsupported format: {format}", file=sys.stderr)
+        sys.exit(1)
+
+def main():
+    parser = argparse.ArgumentParser(description="Gebeta Governance CLI")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    validate_parser = subparsers.add_parser("validate", help="Validate a command")
+    validate_parser.add_argument("--command", required=True, help="Command to validate")
+
+    audit_parser = subparsers.add_parser("audit", help="Export audit log")
+    audit_parser.add_argument("--format", choices=["json", "csv"], default="json", help="Output format")
+
+    args = parser.parse_args()
+
+    if args.command == "validate":
+        blocked = load_blocked_patterns()
+        if is_command_blocked(args.command, blocked):
+            print(f"❌ BLOCKED: '{args.command}' is not allowed by safe-command-policy.md")
+            log_action(args.command, approved=False)
+            sys.exit(1)
+        else:
+            print(f"✅ ALLOWED: '{args.command}'")
+            log_action(args.command, approved=True)
+            sys.exit(0)
+    elif args.command == "audit":
+        audit_export(args.format)
+    else:
+        parser.print_help()
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
