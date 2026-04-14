@@ -1,4 +1,3 @@
-
 # Product Roadmap
 
 ## Overview
@@ -22,6 +21,21 @@ This roadmap outlines the planned evolution of Gebeta Sovereign Code Assistant.
 
 ---
 
+## Version 1.0.1 — Security & Stability (Released) ✅
+
+**Focus:** Rate limiting, token refresh, error handling
+
+**Deliverables:**
+- Rate limiting for authentication endpoints (10 req/min login, 5 req/5min register)
+- Token refresh endpoint and React interceptor
+- Standardised error responses (FastAPI + Spring Boot)
+- React ErrorBoundary component
+- Spring Boot CORS and global exception handling
+
+**Status:** Released
+
+---
+
 ## Version 2.0 — Platform (Q3 2026)
 
 **Focus:** Web portal, onboarding, analytics
@@ -37,6 +51,21 @@ This roadmap outlines the planned evolution of Gebeta Sovereign Code Assistant.
 **Target users:** Teams of 3-20 developers
 
 **Status:** Planning
+
+---
+
+## Version 2.1 — Community Templates (Q4 2026)
+
+**Focus:** User-contributed templates and rules
+
+**Planned features:**
+- Community-submitted starter templates
+- Shared rule packs
+- Template gallery
+
+**Target users:** Open source community
+
+**Status:** Roadmap
 
 ---
 
@@ -84,7 +113,7 @@ This roadmap outlines the planned evolution of Gebeta Sovereign Code Assistant.
 | Version | Focus | Target Date |
 |---------|-------|-------------|
 | V1.0 | Foundation | ✅ April 2026 |
-| V1.1 | Bug fixes & polish | May 2026 |
+| V1.0.1 | Security & Stability (rate limiting, token refresh, error handling) | ✅ April 2026 |
 | V2.0 | Platform | Q3 2026 |
 | V2.1 | Community templates | Q4 2026 |
 | V3.0 | Enterprise | Q1 2027 |
@@ -106,4 +135,3 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 ---
 
 **Last updated:** April 2026
-```
